@@ -139,9 +139,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .nav a:hover{color:var(--ink);background:var(--panel-2)}
 .nav a.btn{color:var(--ball-ink)}
 .nav a.btn:hover{background:transparent;color:var(--ink)}
-@media (max-width:640px){
+@media (max-width:860px){
   .nav a:not(.btn){display:none}
-  .topbar__in{flex-wrap:nowrap;gap:10px;min-height:58px}
+  .topbar__in{flex-wrap:nowrap}
+}
+@media (max-width:640px){
+  .topbar__in{gap:10px;min-height:58px}
   .logo{font-size:1.3rem;min-width:0}
   .nav a.btn{padding:8px 13px;font-size:.88rem;white-space:nowrap}
 }
