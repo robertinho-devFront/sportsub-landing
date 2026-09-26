@@ -139,7 +139,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .nav a:hover{color:var(--ink);background:var(--panel-2)}
 .nav a.btn{color:var(--ball-ink)}
 .nav a.btn:hover{background:transparent;color:var(--ink)}
-@media (max-width:860px){
+@media (max-width:980px){
   .nav a:not(.btn){display:none}
   .topbar__in{flex-wrap:nowrap}
 }
@@ -290,7 +290,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   margin-top:26px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;
   border-top:1px solid rgba(255,255,255,.14);padding-top:26px;align-items:start;
 }
-@media (max-width:860px){ .pitch{grid-template-columns:1fr;gap:22px} }
+@media (max-width:980px){ .pitch{grid-template-columns:1fr;gap:22px} }
 .pitch h3{font-size:1.45rem}
 .ticks{margin-top:14px;display:grid;gap:9px}
 .ticks li{position:relative;padding-left:26px;color:var(--dark-soft);font-size:.96rem}
