@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>SportSub — trouve un partenaire de tennis et de padel dans le 17e</title>
+<meta name="description" content="Tu as un créneau, il te manque quelqu'un. SportSub montre qui joue près de chez toi, à quelle heure et à quel niveau. Terrains publics, murs d'entraînement, clubs et coachs du 17e arrondissement de Paris.">
+<link rel="canonical" href="https://robertinho-devfront.github.io/sportsub-landing/">
+<meta name="theme-color" content="#0F231A">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="SportSub">
+<meta property="og:title" content="SportSub — il manque un joueur">
+<meta property="og:description" content="Trouve un partenaire de tennis ou de padel dans le 17e. Terrains publics, murs d'entraînement, coachs. Rejoins la liste de lancement.">
+<meta property="og:url" content="https://robertinho-devfront.github.io/sportsub-landing/">
+<meta property="og:image" content="https://robertinho-devfront.github.io/sportsub-landing/assets/img/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SportSub — il manque un joueur. Tennis et padel, Paris 17e.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SportSub — il manque un joueur">
+<meta name="twitter:description" content="Trouve un partenaire de tennis ou de padel dans le 17e. Rejoins la liste de lancement.">
+<meta name="twitter:image" content="https://robertinho-devfront.github.io/sportsub-landing/assets/img/og-cover.png">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+
+<!-- Test A/B du titre : assigné avant le premier rendu, donc sans clignotement.
+     Le variant A est celui qui s'affiche si JavaScript est désactivé. -->
+<script>
+(function(){
+  try{
+    var k="sportsub_ab_headline", v=localStorage.getItem(k);
+    if(v!=="a" && v!=="b"){ v = Math.random() < 0.5 ? "a" : "b"; localStorage.setItem(k, v); }
+    document.documentElement.setAttribute("data-variant", v);
+  }catch(e){ document.documentElement.setAttribute("data-variant","a"); }
+})();
+</script>
+
+<!--
+  Analytique sans cookie, donc sans bandeau de consentement.
+  Décommente et remplace le domaine quand tu auras un compte Plausible (ou équivalent).
+  <script defer data-domain="sportsub.fr" src="https://plausible.io/js/script.js"></script>
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://robertinho-devfront.github.io/sportsub-landing/#site",
+      "url": "https://robertinho-devfront.github.io/sportsub-landing/",
+      "name": "SportSub",
+      "inLanguage": "fr-FR",
+      "description": "Trouve un partenaire de tennis ou de padel dans le 17e arrondissement de Paris."
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://robertinho-devfront.github.io/sportsub-landing/#org",
+      "name": "SportSub",
+      "url": "https://robertinho-devfront.github.io/sportsub-landing/",
+      "logo": "https://robertinho-devfront.github.io/sportsub-landing/assets/img/og-cover.png",
+      "founder": { "@type": "Person", "name": "Roberto Da Silva" },
+      "areaServed": { "@type": "City", "name": "Paris" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://robertinho-devfront.github.io/sportsub-landing/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "SportSub, c'est payant ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Trouver un partenaire et rejoindre une partie reste gratuit. Les options payantes concernent les coachs et les clubs qui veulent remplir leurs créneaux." } },
+        { "@type": "Question", "name": "Il faut être classé pour s'inscrire ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Non. Le niveau sert à te proposer les bonnes parties, pas à te trier. Débutants, joueurs du dimanche et classés cohabitent, chacun sur ses créneaux." } },
+        { "@type": "Question", "name": "Ça marche dans quel quartier ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "On démarre sur le 17e arrondissement de Paris : terrains publics, murs d'entraînement en accès libre, clubs et coachs du secteur. Les autres arrondissements suivront." } },
+        { "@type": "Question", "name": "Qu'est-ce qu'on fait de mon adresse e-mail ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Elle sert uniquement à te prévenir du lancement. Aucune revente, aucun partage, désinscription en un clic." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="logo" href="#top" aria-label="SportSub, accueil">
+      <span class="logo__ball" aria-hidden="true"></span>
+      SportSub
+      <span class="tag">Paris 17<sup>e</sup></span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#comment">Comment ça marche</a>
+      <a href="#quartier">Le quartier</a>
+      <a href="#partenaires">Partenaires</a>
+      <a class="btn btn--ball btn--sm" href="#inscription">Rejoindre la liste</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="top">
+    <div class="wrap hero__in">
+      <div class="hero__text">
+        <p class="kicker">Tennis &amp; padel · Paris 17<sup>e</sup> · Lancement 2026</p>
+        <h1 id="headline">
+          <span class="v v--a">Il manque <em>un joueur</em>.</span>
+          <span class="v v--b">Trouve ton <em>partenaire</em> dans le 17<sup>e</sup>.</span>
+        </h1>
+        <p class="lead">
+          Tu as un créneau, ton partenaire annule. Ou l'inverse : tu es dispo, tu ne sais pas avec qui.
+          SportSub montre qui joue près de chez toi, à quelle heure et à quel niveau.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn--ball" href="#inscription">Rejoindre la liste du 17<sup>e</sup></a>
+          <a class="btn btn--ghost" href="#comment">Voir comment ça marche</a>
+        </div>
+        <p class="micro">Gratuit. Une adresse e-mail, rien d'autre. On te prévient au lancement.</p>
+      </div>
+
+      <figure class="hero__card" aria-labelledby="hero-card-t">
+        <figcaption class="hero__card-head">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="hero-card-t">Samedi 10:00 · Centre sportif Courcelles</span>
+        </figcaption>
+        <p class="hero__card-title">Double du samedi</p>
+        <p class="hero__card-meta">Loisir à régulier · chez Roberto</p>
+        <div class="seats" role="img" aria-label="3 joueurs sur 4">
+          <i class="seat seat--on"></i><i class="seat seat--on"></i><i class="seat seat--on"></i><i class="seat"></i>
+        </div>
+        <p class="hero__card-alert">Il manque 1 joueur</p>
+        <p class="hero__card-foot">Exemple de partie, telle qu'elle apparaîtra dans l'app.</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══ PROBLÈME ══ -->
+  <section class="sec" id="probleme">
+    <div class="wrap">
+      <p class="kicker">Ce qui coince aujourd'hui</p>
+      <h2>Trois façons de ne pas jouer.</h2>
+      <div class="cols3">
+        <article class="prob">
+          <h3>Personne en face</h3>
+          <p>Le terrain est réservé, ton partenaire lâche à 19h. La partie tombe, le créneau est perdu, tu ranges la raquette.</p>
+        </article>
+        <article class="prob">
+          <h3>Aucun repère</h3>
+          <p>Tu reprends après des années. Tu ne sais pas où tu en es, tu n'oses pas pousser la porte d'un club. Alors tu attends.</p>
+        </article>
+        <article class="prob">
+          <h3>Rien à côté</h3>
+          <p>Tu sais qu'il y a des terrains dans le quartier. Ni lesquels, ni quand ils sont libres, ni avec qui les partager.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMMENT ══ -->
+  <section class="sec sec--alt" id="comment">
+    <div class="wrap">
+      <p class="kicker">Comment ça marche</p>
+      <h2>Quatre étapes, pas une de plus.</h2>
+      <ol class="steps">
+        <li>
+          <h3>Tu ouvres la carte</h3>
+          <p>Pas de compte, pas de formulaire. Les terrains publics, les murs d'entraînement et les créneaux ouverts du quartier, tout de suite.</p>
+        </li>
+        <li>
+          <h3>Tu crées ton profil</h3>
+          <p>Sports, niveau, disponibilités, style de jeu. Deux minutes. C'est ce qui permet de te proposer les bonnes parties, pas n'importe lesquelles.</p>
+        </li>
+        <li>
+          <h3>Tu rejoins ou tu publies</h3>
+          <p>Une place libre sur un double du samedi matin. Ou ton propre créneau, à compléter par quelqu'un du quartier.</p>
+        </li>
+        <li>
+          <h3>Il manque un joueur&nbsp;?</h3>
+          <p>Quelqu'un se désiste&nbsp;? L'alerte part aux joueurs dispos du secteur, par vagues, jusqu'à ce que la place soit reprise. La partie a lieu.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ POUR QUI ══ -->
+  <section class="sec" id="pour-qui">
+    <div class="wrap">
+      <p class="kicker">À qui ça parle</p>
+      <h2>Cinq profils, un même quartier.</h2>
+      <div class="cards">
+        <article class="mini"><h3>Tu tapes au mur, seul</h3><p>Les murs en accès libre sont sur la carte, avec les créneaux où d'autres viennent s'entraîner.</p></article>
+        <article class="mini"><h3>Tu es classé</h3><p>Filtre par niveau. On ne te propose pas un grand débutant un samedi matin.</p></article>
+        <article class="mini"><h3>Tu découvres</h3><p>Des parties marquées « débutants bienvenus ». Sans pression, sans score, sans regard.</p></article>
+        <article class="mini"><h3>Tu as 14 ans</h3><p>Des créneaux ados encadrés, sur les terrains publics du quartier.</p></article>
+        <article class="mini"><h3>Tu entraînes</h3><p>Tu remplis tes heures creuses. Carte professionnelle vérifiée, paiement sécurisé, pas de commission cachée.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ QUARTIER ══ -->
+  <section class="sec sec--alt" id="quartier">
+    <div class="wrap">
+      <p class="kicker">Le quartier pilote</p>
+      <h2>On commence par le 17<sup>e</sup>.</h2>
+      <p class="lead lead--tight">
+        Un arrondissement, quelques centaines de joueurs, des terrains qu'on connaît par leur nom.
+        Mieux vaut un quartier qui tourne qu'une carte de France vide.
+      </p>
+      <ul class="venues">
+        <li>
+          <span class="venues__k" aria-hidden="true">4</span>
+          <div>
+            <h3>Centre sportif Courcelles</h3>
+            <p>229 rue de Courcelles — des courts extérieurs et, sur le même site, deux murs d'entraînement de 16 × 16 m.</p>
+            <p class="badge badge--free">Murs en accès libre</p>
+          </div>
+        </li>
+        <li>
+          <span class="venues__k venues__k--wall" aria-hidden="true">MUR</span>
+          <div>
+            <h3>Parc Clichy-Batignolles — Martin Luther King</h3>
+            <p>147 rue Cardinet — un mur de tennis en plein parc, ouvert à tous aux horaires du jardin.</p>
+            <p class="badge badge--free">Gratuit</p>
+          </div>
+        </li>
+        <li>
+          <span class="venues__k" aria-hidden="true">3</span>
+          <div>
+            <h3>Centre sportif Max Rousié</h3>
+            <p>28 rue André Bréchet — courts synthétiques découverts, au nord de l'arrondissement. Pas d'éclairage : ça se joue de jour.</p>
+          </div>
+        </li>
+      </ul>
+      <p class="micro">Liste en cours de vérification sur le terrain. Un lieu manque ou une info est fausse ? <a href="#inscription">Dis-le-moi</a>.</p>
+    </div>
+  </section>
+
+  <!-- ══ ARCHÉTYPES ══ -->
+  <section class="sec" id="styles">
+    <div class="wrap">
+      <p class="kicker">Ton style de jeu</p>
+      <h2>Six archétypes. Aucun n'est un niveau.</h2>
+      <p class="lead lead--tight">
+        Pas de noms de champions, pas de classement déguisé. Un style, pour trouver le bon partenaire —
+        et chacun a son duo naturel en double.
+      </p>
+      <div class="arch">
+        <article><p class="trait">Régularité</p><h3>Le Mur</h3><p>Tu remets tout. L'adversaire craque avant toi.</p><p class="duo">En double avec L'Éclair</p></article>
+        <article><p class="trait">Puissance</p><h3>Le Canon</h3><p>Service, smash, coup droit. Ça part fort.</p><p class="duo">En double avec L'Architecte</p></article>
+        <article><p class="trait">Tactique</p><h3>L'Architecte</h3><p>Tu construis le point, tu lis le jeu, tu places.</p><p class="duo">En double avec Le Canon</p></article>
+        <article><p class="trait">Vitesse</p><h3>L'Éclair</h3><p>Tu montes au filet, tu surprends, tu conclus vite.</p><p class="duo">En double avec Le Mur</p></article>
+        <article><p class="trait">Adaptation</p><h3>Le Caméléon</h3><p>Tu changes de plan selon l'adversaire.</p><p class="duo">En double avec L'Étincelle</p></article>
+        <article><p class="trait">Créativité</p><h3>L'Étincelle</h3><p>Amortie, lob, coup improbable. Le public t'adore.</p><p class="duo">En double avec Le Caméléon</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PARTENAIRES / SPONSORS ══ -->
+  <section class="sec sec--dark" id="partenaires">
+    <div class="wrap">
+      <p class="kicker kicker--light">Partenaires &amp; sponsors</p>
+      <h2>Un quartier, une communauté, une marque à côté.</h2>
+      <p class="lead lead--tight">
+        SportSub démarre sur un terrain précis : les joueurs de tennis et de padel du 17<sup>e</sup>.
+        Petite audience, mais qualifiée, locale et identifiable — le contraire d'une bannière perdue.
+      </p>
+
+      <div class="cols3 cols3--dark">
+        <article class="offer">
+          <h3>Marques de sport</h3>
+          <p>Cordage, raquettes, textile, nutrition. Test produit sur des joueurs réguliers, dotation des premières parties, présence sur les créneaux découverte.</p>
+        </article>
+        <article class="offer">
+          <h3>Commerces du quartier</h3>
+          <p>Le café d'après match, le kiné, le magasin de sport de la rue. Visibilité auprès de gens qui habitent à cinq minutes et reviennent chaque semaine.</p>
+        </article>
+        <article class="offer">
+          <h3>Clubs &amp; coachs</h3>
+          <p>Remplir les heures creuses, capter des joueurs qui n'osent pas franchir la porte d'un club. Carte professionnelle vérifiée, paiement sécurisé.</p>
+        </article>
+      </div>
+
+      <div class="pitch">
+        <div>
+          <h3>Ce qu'on peut mettre en place dès le lancement</h3>
+          <ul class="ticks">
+            <li>Dotation d'une saison de parties « débutants bienvenus »</li>
+            <li>Créneau signé par la marque sur un terrain public</li>
+            <li>Présence sur la carte, la newsletter et les pages de lieux</li>
+            <li>Bilan chiffré : inscriptions, parties jouées, joueurs touchés</li>
+          </ul>
+        </div>
+        <div class="pitch__cta">
+          <p>Un dossier partenaire détaillé est disponible sur demande.</p>
+          <a class="btn btn--ball" href="#inscription" data-role="partenaire">Parler d'un partenariat</a>
+          <p class="micro micro--light">Réponse sous 48&nbsp;h. Roberto Da Silva, fondateur.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INSCRIPTION ══ -->
+  <section class="sec" id="inscription">
+    <div class="wrap form-grid">
+      <div>
+        <p class="kicker">Liste de lancement</p>
+        <h2>Laisse-nous ton créneau.</h2>
+        <p class="lead lead--tight">
+          Dis-nous où tu joues et ce que tu cherches. On te prévient dès que les premières parties du 17<sup>e</sup> s'ouvrent —
+          et les premiers inscrits choisissent leurs créneaux avant tout le monde.
+        </p>
+        <ul class="ticks ticks--plain">
+          <li>Aucune revente d'adresse, jamais.</li>
+          <li>Un e-mail au lancement, pas une newsletter de plus.</li>
+          <li>Désinscription en un clic.</li>
+        </ul>
+      </div>
+
+      <form id="form" novalidate>
+        <div class="field">
+          <label for="f-prenom">Prénom</label>
+          <input type="text" id="f-prenom" name="prenom" autocomplete="given-name" required aria-describedby="e-prenom">
+          <p class="err" id="e-prenom" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="f-email">E-mail</label>
+          <input type="email" id="f-email" name="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+          <p class="err" id="e-email" hidden></p>
+        </div>
+
+        <fieldset class="field">
+          <legend>Tu es plutôt</legend>
+          <div class="opts" role="group">
+            <label class="opt"><input type="radio" name="profil" value="joueur" checked><span>Joueur ou joueuse</span></label>
+            <label class="opt"><input type="radio" name="profil" value="coach"><span>Coach ou club</span></label>
+            <label class="opt"><input type="radio" name="profil" value="partenaire"><span>Partenaire / sponsor</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field" data-when="joueur">
+          <label for="f-niveau">Ton niveau</label>
+          <select id="f-niveau" name="niveau">
+            <option value="">Choisis…</option>
+            <option value="decouverte">Je découvre, je n'ai jamais vraiment joué</option>
+            <option value="loisir">Loisir, je tape la balle de temps en temps</option>
+            <option value="regulier">Régulier, je joue toutes les semaines</option>
+            <option value="classe">Classé, de 30/4 à 15/5</option>
+            <option value="competition">Compétition, 15/4 et mieux</option>
+          </select>
+        </div>
+
+        <fieldset class="field" data-when="joueur">
+          <legend>Tes créneaux</legend>
+          <div class="opts">
+            <label class="opt"><input type="checkbox" name="dispo" value="matin"><span>Matin en semaine</span></label>
+            <label class="opt"><input type="checkbox" name="dispo" value="midi"><span>Pause déjeuner</span></label>
+            <label class="opt"><input type="checkbox" name="dispo" value="soir"><span>Après 18h</span></label>
+            <label class="opt"><input type="checkbox" name="dispo" value="samedi"><span>Samedi</span></label>
+            <label class="opt"><input type="checkbox" name="dispo" value="dimanche"><span>Dimanche</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="f-mot">Un mot <span class="opt-tag">facultatif</span></label>
+          <textarea id="f-mot" name="mot" maxlength="600" placeholder="Ce qui te manque aujourd'hui pour jouer plus souvent…"></textarea>
+        </div>
+
+        <!-- Piège à robots : invisible pour les humains, rempli par les bots. -->
+        <div class="hp" aria-hidden="true">
+          <label for="f-site">Ne remplis pas ce champ</label>
+          <input type="text" id="f-site" name="_gotcha" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn btn--ball" id="submit">Je rejoins la liste</button>
+        <p class="state" id="state" role="status" hidden></p>
+        <p class="micro">
+          En envoyant ce formulaire, tu acceptes d'être recontacté au sujet de SportSub.
+          Voir les <a href="mentions-legales.html">mentions légales</a>.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="sec sec--alt" id="faq">
+    <div class="wrap">
+      <p class="kicker">Questions</p>
+      <h2>Ce qu'on nous demande.</h2>
+      <div class="faq">
+        <details>
+          <summary>SportSub, c'est payant&nbsp;?</summary>
+          <p>Trouver un partenaire et rejoindre une partie reste gratuit. Les options payantes concernent les coachs et les clubs qui veulent remplir leurs créneaux.</p>
+        </details>
+        <details>
+          <summary>Il faut être classé pour s'inscrire&nbsp;?</summary>
+          <p>Non. Le niveau sert à te proposer les bonnes parties, pas à te trier. Débutants, joueurs du dimanche et classés cohabitent, chacun sur ses créneaux.</p>
+        </details>
+        <details>
+          <summary>Ça marche dans quel quartier&nbsp;?</summary>
+          <p>On démarre sur le 17<sup>e</sup> arrondissement de Paris : terrains publics, murs d'entraînement en accès libre, clubs et coachs du secteur. Les autres arrondissements suivront, un par un.</p>
+        </details>
+        <details>
+          <summary>Qu'est-ce qu'on fait de mon adresse e-mail&nbsp;?</summary>
+          <p>Elle sert uniquement à te prévenir du lancement. Aucune revente, aucun partage, désinscription en un clic.</p>
+        </details>
+        <details>
+          <summary>Je suis coach, comment ça se passe&nbsp;?</summary>
+          <p>Carte professionnelle vérifiée à l'inscription, comme l'exige le Code du sport. Tu publies tes créneaux, les joueurs réservent, le paiement est sécurisé.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div>
+      <a class="logo logo--foot" href="#top"><span class="logo__ball" aria-hidden="true"></span>SportSub</a>
+      <p class="micro micro--light">Trouve un partenaire de tennis ou de padel dans le 17<sup>e</sup>. Projet indépendant, fondé par Roberto Da Silva.</p>
+    </div>
+    <nav aria-label="Pied de page">
+      <a href="#comment">Comment ça marche</a>
+      <a href="#partenaires">Partenaires</a>
+      <a href="#inscription">Rejoindre la liste</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

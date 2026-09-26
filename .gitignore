@@ -1,0 +1,18 @@
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+
+# Dépendances et sorties d'outils éventuels
+node_modules/
+dist/
+.cache/
+
+# Secrets — ne jamais committer
+.env
+.env.*

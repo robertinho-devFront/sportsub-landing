@@ -1,0 +1,13 @@
+{
+  "name": "SportSub",
+  "short_name": "SportSub",
+  "description": "Trouve un partenaire de tennis ou de padel dans le 17e arrondissement de Paris.",
+  "lang": "fr-FR",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#EDF0EA",
+  "theme_color": "#0F231A",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
