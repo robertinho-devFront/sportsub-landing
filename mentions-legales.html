@@ -14,20 +14,18 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-<a class="skip" href="#contenu">Aller au contenu</a>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<header class="topbar">
-  <div class="wrap topbar__in">
-    <a class="logo" href="index.html"><span class="logo__ball" aria-hidden="true"></span>SportSub</a>
-    <nav class="nav" aria-label="Navigation principale">
-      <a class="btn btn--ghost btn--sm" href="index.html">Retour à l'accueil</a>
-    </nav>
+<header class="site-header">
+  <div class="wrap site-header__row">
+    <a class="wordmark" href="index.html"><span class="wordmark__ball" aria-hidden="true"></span>SPORT<b>SUB</b></a>
+    <a class="btn btn--small btn--ghost" href="index.html">Retour<span class="hide-sm">&nbsp;à l'accueil</span></a>
   </div>
 </header>
 
 <main id="contenu" class="wrap doc">
-  <h1>Mentions légales</h1>
-  <p class="micro">Dernière mise à jour : septembre 2026.</p>
+  <h1 class="display">Mentions légales</h1>
+  <p class="field__hint">Dernière mise à jour : septembre 2026.</p>
 
   <h2>Éditeur du site</h2>
   <p>
@@ -36,7 +34,7 @@
     Paris, France.<br>
     Contact : <a href="mailto:rdasilva75@gmail.com">rdasilva75@gmail.com</a>
   </p>
-  <p class="micro">
+  <p class="field__hint">
     À compléter avant toute communication publique : forme juridique, adresse du siège,
     numéro SIREN ou SIRET, et nom du directeur de la publication.
   </p>
@@ -86,16 +84,17 @@
   </p>
 </main>
 
-<footer class="foot">
-  <div class="wrap foot__in">
-    <div>
-      <a class="logo logo--foot" href="index.html"><span class="logo__ball" aria-hidden="true"></span>SportSub</a>
-      <p class="micro micro--light">Projet indépendant, fondé par Roberto Da Silva.</p>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__grid">
+      <a class="wordmark" href="index.html"><span class="wordmark__ball" aria-hidden="true"></span>SPORT<b>SUB</b></a>
+      <nav aria-label="Pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="bientot.html">Où en est le projet</a>
+        <a href="index.html#inscription">Réserver ma place</a>
+      </nav>
     </div>
-    <nav aria-label="Pied de page">
-      <a href="index.html">Accueil</a>
-      <a href="index.html#inscription">Rejoindre la liste</a>
-    </nav>
+    <small>SportSub — projet indépendant fondé par Roberto Da Silva.</small>
   </div>
 </footer>
 </body>

@@ -1,86 +1,110 @@
 /* ==========================================================================
    SportSub — landing de pré-lancement
-   Aucune dépendance. Le formulaire fonctionne dans deux modes :
-   1. FORM_ENDPOINT renseigné  -> envoi POST (Formspree, Getform, Basin…)
-   2. FORM_ENDPOINT vide       -> ouverture du client mail, pré-rempli
+   Aucune dépendance. Trois blocs : les portes « bientôt », le quiz archétype,
+   le formulaire d'inscription.
    ========================================================================== */
 (function () {
   "use strict";
 
   /* ------------------------------------------------------------------
-     À CONFIGURER — voir README.md, section « Brancher le formulaire »
+     À CONFIGURER — voir README.md
      ------------------------------------------------------------------ */
   var FORM_ENDPOINT = "";                     // ex. "https://formspree.io/f/xxxxxxxx"
   var CONTACT_EMAIL = "rdasilva75@gmail.com"; // à remplacer par une adresse pro
 
-  // Les deux portes de la fenêtre « bientôt disponible ».
-  // Laisse une valeur vide : la porte s'affiche alors grisée, marquée « bientôt ».
+  // Les liens qui n'existent pas encore. Laisse vide : la porte s'affiche
+  // grisée et marquée « bientôt » au lieu de tomber dans le vide.
   var LINKS = {
     carte: "https://claude.ai/artifact/TaeQFjgnWus3HHkNGm4U7F",
-    questionnaire: ""   // colle ici le lien de ton formulaire Google (voir README, section 5)
+    questionnaire: ""   // colle ici le lien de ton formulaire Google (README, section 5)
   };
   /* ------------------------------------------------------------------ */
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function el(tag, cls, txt) { var n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; }
+
+  /* ==================================================================
+     Pictogrammes des archétypes
+     ================================================================== */
+  var GLYPHS = {
+    mur: '<rect x="5" y="8" width="30" height="24"/><path d="M5 16h30M5 24h30M20 8v8M12 16v8M28 16v8M20 24v8"/>',
+    canon: '<path d="M6 32 30 10M19 10h11v11"/><circle cx="9" cy="12" r="3.5"/>',
+    architecte: '<rect x="8" y="5" width="24" height="30"/><path d="M8 20h24M13 5v30M27 5v30M13 12.5h14M13 27.5h14M20 12.5v15"/>',
+    eclair: '<path d="M23 4 10 22h9l-3 14 14-20h-9z"/>',
+    cameleon: '<circle cx="20" cy="20" r="14"/><path d="M20 6a14 14 0 0 1 0 28z" fill="currentColor"/>',
+    etincelle: '<path d="M20 4v10M20 26v10M4 20h10M26 20h10M9 9l6 6M25 25l6 6M31 9l-6 6M15 25l-6 6"/>'
+  };
+
+  function glyph(slug) {
+    return '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+           'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (GLYPHS[slug] || "") + "</svg>";
+  }
+
+  var ARCHETYPES = {
+    mur:        { name: "Le Mur",        trait: "Régularité", tagline: "Tu remets tout. L'adversaire craque avant toi.", duo: "eclair" },
+    canon:      { name: "Le Canon",      trait: "Puissance",  tagline: "Service, smash, coup droit. Ça part fort.",       duo: "architecte" },
+    architecte: { name: "L'Architecte",  trait: "Tactique",   tagline: "Tu construis le point, tu lis le jeu, tu places.", duo: "canon" },
+    eclair:     { name: "L'Éclair",      trait: "Vitesse",    tagline: "Tu montes au filet, tu surprends, tu conclus vite.", duo: "mur" },
+    cameleon:   { name: "Le Caméléon",   trait: "Adaptation", tagline: "Tu changes de plan selon l'adversaire.",           duo: "etincelle" },
+    etincelle:  { name: "L'Étincelle",   trait: "Créativité", tagline: "Amortie, lob, coup improbable. Le public t'adore.", duo: "cameleon" }
+  };
+  var SLUGS = ["mur", "canon", "architecte", "eclair", "cameleon", "etincelle"];
+
+  // Les pastilles du terrain, dans le hero.
+  all("[data-glyph]").forEach(function (node) { node.innerHTML = glyph(node.getAttribute("data-glyph")); });
+
+  // La grille des six archétypes.
+  var roll = document.getElementById("archetype-roll");
+  if (roll) {
+    SLUGS.forEach(function (slug) {
+      var cell = el("div");
+      cell.innerHTML = glyph(slug);
+      cell.appendChild(el("b", null, ARCHETYPES[slug].name));
+      cell.appendChild(el("span", null, ARCHETYPES[slug].trait));
+      roll.appendChild(cell);
+    });
+  }
 
   /* ==================================================================
      Portes « bientôt disponible »
      ================================================================== */
   all("[data-door-link]").forEach(function (node) {
     var url = LINKS[node.getAttribute("data-door-link")];
-    if (url) {
-      node.setAttribute("href", url);
-      return;
-    }
+    if (url) { node.setAttribute("href", url); return; }
+
     node.removeAttribute("href");
     node.removeAttribute("target");
     node.setAttribute("aria-disabled", "true");
     node.setAttribute("role", "link");
-    var label = $(".door__b", node);
-    if (label && !$(".door__soon", label)) {
-      var tag = document.createElement("span");
-      tag.className = "door__soon";
-      tag.textContent = "Disponible très bientôt";
-      label.appendChild(tag);
-    }
+    var body = $(".door__b", node);
+    if (body && !$(".door__soon", body)) body.appendChild(el("span", "door__soon", "Disponible très bientôt"));
     node.addEventListener("click", function (e) { e.preventDefault(); });
   });
 
   var dialog = document.getElementById("soon");
-
   if (dialog && typeof dialog.showModal === "function") {
     var lastFocus = null;
 
-    function openSoon(door) {
+    var openSoon = function (door) {
       lastFocus = document.activeElement;
       dialog.showModal();
       var target = door ? $('[data-door-link="' + door + '"]', dialog) : null;
       var first = (target && target.getAttribute("href")) ? target : $(".door", dialog);
       if (first) first.focus();
-    }
-
-    function closeSoon() {
+    };
+    var closeSoon = function () {
       dialog.close();
       if (lastFocus && lastFocus.focus) lastFocus.focus();
-    }
+    };
 
-    // Tout lien marqué data-soon ouvre la fenêtre au lieu de naviguer.
-    // Sans JavaScript, il mène à bientot.html, qui dit la même chose.
     all("[data-soon]").forEach(function (link) {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        openSoon(link.getAttribute("data-door"));
-      });
+      link.addEventListener("click", function (e) { e.preventDefault(); openSoon(link.getAttribute("data-door")); });
     });
 
     var closeBtn = document.getElementById("soon-close");
     if (closeBtn) closeBtn.addEventListener("click", closeSoon);
-
-    // Clic sur le fond, en dehors du panneau.
-    dialog.addEventListener("click", function (e) {
-      if (e.target === dialog) closeSoon();
-    });
+    dialog.addEventListener("click", function (e) { if (e.target === dialog) closeSoon(); });
 
     var doorListe = document.getElementById("door-liste");
     if (doorListe) {
@@ -95,6 +119,168 @@
   }
 
   /* ==================================================================
+     Quiz archétype — trois questions de style
+     ================================================================== */
+  var QUESTIONS = [
+    {
+      title: "Balle de break contre toi. Tu…",
+      options: [
+        { label: "remets la balle au centre, sans risque",            w: { mur: 2, cameleon: 1 } },
+        { label: "frappes fort, ça passe ou ça casse",                w: { canon: 2, eclair: 1 } },
+        { label: "construis le point pour le prendre à revers",       w: { architecte: 2, mur: 1 } },
+        { label: "montes au filet pour abréger",                      w: { eclair: 2, canon: 1 } },
+        { label: "regardes ce qui a marché sur les derniers points",  w: { cameleon: 2, architecte: 1 } },
+        { label: "tentes l'amortie que personne n'attend",            w: { etincelle: 2, eclair: 1 } }
+      ]
+    },
+    {
+      title: "Ton coup préféré ?",
+      options: [
+        { label: "L'échange long qui use l'adversaire",   w: { mur: 2, architecte: 1 } },
+        { label: "Le service ou le smash qui claque",     w: { canon: 2 } },
+        { label: "Le coup croisé qui ouvre le terrain",   w: { architecte: 2, cameleon: 1 } },
+        { label: "La volée au filet",                     w: { eclair: 2, canon: 1 } },
+        { label: "Celui dont j'ai besoin sur le moment",  w: { cameleon: 2, mur: 1 } },
+        { label: "Le lob ou l'amortie",                   w: { etincelle: 2, architecte: 1 } }
+      ]
+    },
+    {
+      title: "Après la partie, on dit de toi…",
+      options: [
+        { label: "« Impossible de lui faire faire une faute »", w: { mur: 2 } },
+        { label: "« Il faut rester loin derrière la ligne »",   w: { canon: 2, mur: 1 } },
+        { label: "« Toujours un coup d'avance »",               w: { architecte: 2 } },
+        { label: "« Ça va trop vite »",                         w: { eclair: 2 } },
+        { label: "« Le partenaire idéal en double »",           w: { cameleon: 2, eclair: 1 } },
+        { label: "« On ne s'ennuie jamais »",                   w: { etincelle: 2, canon: 1 } }
+      ]
+    }
+  ];
+
+  var quizBox = document.getElementById("quiz");
+  var chosenArchetype = null;
+  var step = 0;
+  var answers = [];
+
+  function scoreArchetype() {
+    var scores = {};
+    SLUGS.forEach(function (s) { scores[s] = 0; });
+    answers.forEach(function (index, q) {
+      var opt = QUESTIONS[q] && QUESTIONS[q].options[index];
+      if (!opt) return;
+      Object.keys(opt.w).forEach(function (slug) { scores[slug] += opt.w[slug]; });
+    });
+    var best = SLUGS[0];
+    SLUGS.forEach(function (s) { if (scores[s] > scores[best]) best = s; });
+    return best;
+  }
+
+  function renderQuiz() {
+    if (!quizBox) return;
+    quizBox.innerHTML = "";
+
+    if (step >= QUESTIONS.length) {
+      var slug = scoreArchetype();
+      var a = ARCHETYPES[slug];
+      var duo = ARCHETYPES[a.duo];
+      chosenArchetype = a.name;
+
+      quizBox.className = "quiz result";
+      var prog = el("p", "quiz__progress");
+      prog.appendChild(el("span", null, "Ton résultat"));
+      prog.appendChild(el("span", null, a.trait));
+      quizBox.appendChild(prog);
+
+      var head = el("div", "result__head");
+      var g = el("span", "result__glyph");
+      g.innerHTML = glyph(slug);
+      head.appendChild(g);
+      head.appendChild(el("p", "result__name", a.name));
+      quizBox.appendChild(head);
+
+      quizBox.appendChild(el("p", null, a.tagline));
+
+      var facts = el("dl", "result__facts");
+      [["Trait", a.trait], ["Duo en double", duo.name]].forEach(function (pair) {
+        var d = el("div");
+        d.appendChild(el("dt", null, pair[0]));
+        d.appendChild(el("dd", null, pair[1]));
+        facts.appendChild(d);
+      });
+      quizBox.appendChild(facts);
+
+      quizBox.appendChild(el("p", "quiz__hint", "Un archétype décrit un style, pas un niveau. On peut être " + a.name + " en débutant comme en compétition."));
+
+      var nav = el("div", "quiz__nav");
+      var keep = el("a", "btn", "Garder et m'inscrire");
+      keep.setAttribute("href", "#inscription");
+      keep.addEventListener("click", function () { applyArchetype(a.name); });
+      var again = el("button", "quiz__back", "Refaire le quiz");
+      again.type = "button";
+      again.addEventListener("click", function () { step = 0; answers = []; renderQuiz(); });
+      nav.appendChild(keep);
+      nav.appendChild(again);
+      quizBox.appendChild(nav);
+      return;
+    }
+
+    var q = QUESTIONS[step];
+    quizBox.className = "quiz";
+
+    var progress = el("p", "quiz__progress");
+    progress.appendChild(el("span", null, "Question " + (step + 1) + " sur " + QUESTIONS.length));
+    progress.appendChild(el("span", null, "30 secondes"));
+    quizBox.appendChild(progress);
+
+    var bar = el("div", "quiz__bar");
+    var fill = el("i");
+    fill.style.width = Math.round((step / QUESTIONS.length) * 100) + "%";
+    bar.appendChild(fill);
+    quizBox.appendChild(bar);
+
+    var fs = document.createElement("fieldset");
+    var lg = document.createElement("legend");
+    lg.textContent = q.title;
+    fs.appendChild(lg);
+
+    var opts = el("div", "quiz__options");
+    q.options.forEach(function (opt, i) {
+      var b = el("button", "option", opt.label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", answers[step] === i ? "true" : "false");
+      b.addEventListener("click", function () {
+        answers[step] = i;
+        step += 1;
+        renderQuiz();
+        quizBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+      opts.appendChild(b);
+    });
+    fs.appendChild(opts);
+    quizBox.appendChild(fs);
+
+    if (step > 0) {
+      var nav2 = el("div", "quiz__nav");
+      var back = el("button", "quiz__back", "← Question précédente");
+      back.type = "button";
+      back.addEventListener("click", function () { step -= 1; renderQuiz(); });
+      nav2.appendChild(back);
+      quizBox.appendChild(nav2);
+    }
+  }
+
+  function applyArchetype(name) {
+    chosenArchetype = name;
+    var slot = document.getElementById("archetype-slot");
+    var pill = document.getElementById("archetype-pill");
+    if (!slot || !pill) return;
+    pill.textContent = name;
+    slot.hidden = false;
+  }
+
+  renderQuiz();
+
+  /* ==================================================================
      Formulaire d'inscription (absent sur les autres pages)
      ================================================================== */
   var form = document.getElementById("form");
@@ -103,42 +289,32 @@
   var stateBox = document.getElementById("state");
   var submit = document.getElementById("submit");
 
-  var LABELS = {
-    profil: { joueur: "Joueur/joueuse", coach: "Coach ou club", partenaire: "Partenaire / sponsor" },
-    niveau: {
-      decouverte: "Découverte", loisir: "Loisir", regulier: "Régulier",
-      classe: "Classé (30/4 à 15/5)", competition: "Compétition (15/4 et mieux)"
-    },
-    dispo: {
-      matin: "Matin en semaine", midi: "Pause déjeuner", soir: "Après 18h",
-      samedi: "Samedi", dimanche: "Dimanche"
-    }
+  var ROLES = {
+    player: "Joueur/joueuse",
+    missing: "Il me manque un joueur",
+    coach: "Coach",
+    organization: "Club ou structure"
   };
 
-  function profil() { var r = $('input[name="profil"]:checked'); return r ? r.value : "joueur"; }
+  function role() { var r = $('input[name="role"]:checked'); return r ? r.value : "player"; }
 
-  /* ---------- champs conditionnels ---------- */
-  function syncConditionalFields() {
-    var p = profil();
+  function syncFields() {
+    var current = role();
     all("[data-when]").forEach(function (node) {
-      node.hidden = node.getAttribute("data-when") !== p;
+      node.hidden = (node.getAttribute("data-when") || "").split(/\s+/).indexOf(current) === -1;
     });
   }
-  all('input[name="profil"]').forEach(function (r) {
-    r.addEventListener("change", syncConditionalFields);
-  });
-  syncConditionalFields();
+  all('input[name="role"]').forEach(function (r) { r.addEventListener("change", syncFields); });
+  syncFields();
 
-  /* ---------- pré-sélection depuis un bouton « Parler d'un partenariat » ---------- */
-  all('[data-role]').forEach(function (link) {
+  // Les boutons « Je suis coach » / « Je représente une structure » pré-sélectionnent le bon rôle.
+  all("[data-role]").forEach(function (link) {
     link.addEventListener("click", function () {
-      var role = link.getAttribute("data-role");
-      var radio = $('input[name="profil"][value="' + role + '"]');
-      if (radio) { radio.checked = true; syncConditionalFields(); }
+      var wanted = $('input[name="role"][value="' + link.getAttribute("data-role") + '"]');
+      if (wanted) { wanted.checked = true; syncFields(); }
     });
   });
 
-  /* ---------- validation ---------- */
   function showError(id, message) {
     var node = document.getElementById(id);
     if (!node) return;
@@ -146,6 +322,10 @@
     node.hidden = !message;
     var input = document.getElementById(id.replace(/^e-/, "f-"));
     if (input) input.setAttribute("aria-invalid", message ? "true" : "false");
+  }
+
+  function checked(name) {
+    return all('input[name="' + name + '"]:checked').map(function (i) { return i.value; });
   }
 
   function validate() {
@@ -163,85 +343,91 @@
       ok = false; firstBad = firstBad || $("#f-email");
     } else showError("e-email", "");
 
+    var current = role();
+    if ((current === "player" || current === "missing") && !checked("sports").length) {
+      showError("e-sports", "Choisis au moins un sport.");
+      ok = false; firstBad = firstBad || $('input[name="sports"]');
+    } else showError("e-sports", "");
+
+    if (!$("#f-consent").checked) {
+      showError("e-consent", "Sans cet accord, on ne peut pas te recontacter.");
+      ok = false; firstBad = firstBad || $("#f-consent");
+    } else showError("e-consent", "");
+
     if (firstBad) firstBad.focus();
     return ok;
   }
 
-  /* ---------- collecte ---------- */
   function collect() {
-    var dispo = all('input[name="dispo"]:checked').map(function (i) {
-      return LABELS.dispo[i.value] || i.value;
-    });
-    var niveauValue = $("#f-niveau").value;
-    var p = profil();
-
+    var current = role();
     return {
+      role: ROLES[current] || current,
       prenom: $("#f-prenom").value.trim(),
       email: $("#f-email").value.trim().toLowerCase(),
-      profil: LABELS.profil[p] || p,
-      niveau: p === "joueur" ? (LABELS.niveau[niveauValue] || "Non précisé") : "",
-      creneaux: p === "joueur" ? (dispo.join(", ") || "Non précisé") : "",
+      secteur: $("#f-secteur").value.trim(),
+      sports: checked("sports").join(", "),
+      creneaux: checked("dispo").join(", "),
+      partie: $("#f-quand").value.trim(),
+      structure: $("#f-structure").value.trim(),
+      archetype: chosenArchetype || "",
       message: $("#f-mot").value.trim(),
-      variante_titre: document.documentElement.getAttribute("data-variant") || "a",
       page: location.href,
       envoye_le: new Date().toISOString()
     };
   }
 
   function setState(kind, message) {
-    stateBox.className = "state state--" + kind;
+    stateBox.className = "form-status form-status--" + kind;
     stateBox.textContent = message;
     stateBox.hidden = false;
   }
 
   function track(name, data) {
-    // Plausible ou équivalent, s'il est chargé. Silencieux sinon.
     if (typeof window.plausible === "function") window.plausible(name, { props: data });
   }
 
-  function mailtoFallback(payload) {
-    var lines = [
-      "Prénom : " + payload.prenom,
-      "E-mail : " + payload.email,
-      "Profil : " + payload.profil
-    ];
-    if (payload.niveau) lines.push("Niveau : " + payload.niveau);
-    if (payload.creneaux) lines.push("Créneaux : " + payload.creneaux);
-    if (payload.message) lines.push("", "Message :", payload.message);
-    lines.push("", "— envoyé depuis " + payload.page);
+  function mailtoFallback(p) {
+    var lines = ["Rôle : " + p.role, "Prénom : " + p.prenom, "E-mail : " + p.email];
+    if (p.secteur) lines.push("Secteur : " + p.secteur);
+    if (p.sports) lines.push("Sports : " + p.sports);
+    if (p.creneaux) lines.push("Créneaux : " + p.creneaux);
+    if (p.partie) lines.push("Partie à compléter : " + p.partie);
+    if (p.structure) lines.push("Structure : " + p.structure);
+    if (p.archetype) lines.push("Archétype : " + p.archetype);
+    if (p.message) lines.push("", "Message :", p.message);
+    lines.push("", "— envoyé depuis " + p.page);
 
-    var href = "mailto:" + CONTACT_EMAIL
-      + "?subject=" + encodeURIComponent("SportSub — inscription : " + payload.prenom)
+    window.location.href = "mailto:" + CONTACT_EMAIL
+      + "?subject=" + encodeURIComponent("SportSub — inscription : " + p.prenom)
       + "&body=" + encodeURIComponent(lines.join("\n"));
-    window.location.href = href;
   }
 
-  /* ---------- envoi ---------- */
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Piège à robots : un humain ne remplit jamais ce champ.
     var honeypot = $("#f-site");
     if (honeypot && honeypot.value) return;
 
     if (!validate()) {
-      setState("ko", "Il manque une ou deux choses juste au-dessus.");
+      setState("error", "Il manque une ou deux choses juste au-dessus.");
       return;
     }
 
     var payload = collect();
-    submit.disabled = true;
     var originalLabel = submit.textContent;
+    submit.disabled = true;
     submit.textContent = "Envoi…";
 
     function finish(success, message) {
       submit.disabled = false;
       submit.textContent = originalLabel;
-      setState(success ? "ok" : "ko", message);
+      setState(success ? "ok" : "error", message);
       if (success) {
         form.reset();
-        syncConditionalFields();
-        track("Inscription", { profil: payload.profil, variante: payload.variante_titre });
+        syncFields();
+        var slot = document.getElementById("archetype-slot");
+        if (slot) slot.hidden = true;
+        track("Inscription", { role: payload.role, archetype: payload.archetype || "aucun" });
       }
     }
 
@@ -259,15 +445,11 @@
     })
       .then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
-        finish(true, "C'est noté, " + payload.prenom + ". Tu es sur la liste du 17e. "
-                   + "On te prévient dès que les premières parties s'ouvrent.");
+        finish(true, "C'est noté, " + payload.prenom + ". Ta place est réservée sur la liste du 17e. "
+                   + "On te prévient dès que la bêta ouvre.");
       })
       .catch(function () {
         finish(false, "L'envoi a échoué. Réessaie dans un instant, ou écris directement à " + CONTACT_EMAIL + ".");
       });
   });
-
-  /* ---------- année courante dans le pied de page, si présente ---------- */
-  var year = document.querySelector("[data-year]");
-  if (year) year.textContent = String(new Date().getFullYear());
 })();

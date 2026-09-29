@@ -1,7 +1,11 @@
 # SportSub — landing de pré-lancement
 
-Page d'accueil publique de SportSub : elle explique le projet, invite à rejoindre la liste
-de lancement et ouvre une porte aux partenaires et sponsors.
+Page d'accueil publique de SportSub : elle explique le projet, fait passer le quiz d'archétype,
+renvoie vers la carte du 17e et invite à réserver sa place sur la liste de lancement.
+
+Le design reprend le système « lignes de court » : fond craie, texte nuit, bleu de court dur
+pour les actions, jaune balle en surlignage. Le terrain vu de dessus, dans le hero, est dessiné
+en SVG aux cotes réelles (36 × 78 pieds).
 
 Site **statique** : du HTML, du CSS et un fichier JavaScript. Aucune compilation, aucune
 dépendance, aucun `npm install`. Tu peux double-cliquer sur `index.html` pour le voir.
@@ -20,8 +24,8 @@ bientot.html             « ça ouvre bientôt » : les trois portes, et où en 
 mentions-legales.html    obligatoire dès qu'on collecte une adresse e-mail
 404.html                 page d'erreur
 google-form/             le script qui génère le questionnaire Google en une exécution
-assets/css/styles.css    tout le style, avec thème clair et thème sombre
-assets/js/main.js        formulaire, champs conditionnels, test A/B
+assets/css/styles.css    tout le style — système « lignes de court »
+assets/js/main.js        quiz d'archétype, formulaire, champs conditionnels, fenêtre « bientôt »
 assets/img/              favicon et image de partage (réseaux sociaux)
 robots.txt               autorise l'indexation, pointe vers le sitemap
 sitemap.xml              liste des pages pour Google
@@ -152,22 +156,13 @@ Aucun cookie n'est déposé, donc **aucun bandeau de consentement n'est nécessa
 Pour avoir des statistiques dans le même esprit, décommente le bloc Plausible dans
 le `<head>` de `index.html` et remplace le domaine.
 
-Le fichier `main.js` envoie déjà un évènement `Inscription` à Plausible s'il est chargé,
-avec le profil et la variante de titre. Tu sauras donc **quel titre convertit le mieux**.
+`main.js` envoie déjà un évènement `Inscription` avec le rôle choisi (joueur, joueur manquant,
+coach, structure) et l'archétype obtenu au quiz. Tu sauras donc **qui s'inscrit**, pas seulement
+combien.
 
-### Le test A/B déjà en place
-
-La page affiche au hasard l'un des deux titres, et le retient pour le visiteur :
-
-- **Variante A** — « Il manque un joueur. » : raconte une situation.
-- **Variante B** — « Trouve ton partenaire dans le 17e. » : décrit un service.
-
-Mon pari : A convertit mieux parce qu'elle décrit un problème vécu plutôt qu'une
-fonctionnalité. Mais c'est un pari — laisse tourner jusqu'à une centaine d'inscriptions
-avant de trancher, sinon tu lis du bruit.
-
-Pour forcer une variante et la regarder : ajoute `?` puis ouvre la console et tape
-`localStorage.setItem("sportsub_ab_headline","b")`, puis recharge.
+Il n'y a pas de test A/B sur le titre dans cette version : le hero « Il manque un joueur ? » est
+le cœur de l'identité, et le faire varier abîmerait la marque avant qu'elle existe. Si tu veux
+tester une variante plus tard, le bon endroit est le bouton, pas le titre.
 
 ---
 
