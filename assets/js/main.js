@@ -12,8 +12,91 @@
      ------------------------------------------------------------------ */
   var FORM_ENDPOINT = "";                     // ex. "https://formspree.io/f/xxxxxxxx"
   var CONTACT_EMAIL = "rdasilva75@gmail.com"; // à remplacer par une adresse pro
+
+  // Les deux portes de la fenêtre « bientôt disponible ».
+  // Laisse une valeur vide : la porte s'affiche alors grisée, marquée « bientôt ».
+  var LINKS = {
+    carte: "https://claude.ai/artifact/TaeQFjgnWus3HHkNGm4U7F",
+    questionnaire: ""   // colle ici le lien de ton formulaire Google (voir README, section 5)
+  };
   /* ------------------------------------------------------------------ */
 
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+
+  /* ==================================================================
+     Portes « bientôt disponible »
+     ================================================================== */
+  all("[data-door-link]").forEach(function (node) {
+    var url = LINKS[node.getAttribute("data-door-link")];
+    if (url) {
+      node.setAttribute("href", url);
+      return;
+    }
+    node.removeAttribute("href");
+    node.removeAttribute("target");
+    node.setAttribute("aria-disabled", "true");
+    node.setAttribute("role", "link");
+    var label = $(".door__b", node);
+    if (label && !$(".door__soon", label)) {
+      var tag = document.createElement("span");
+      tag.className = "door__soon";
+      tag.textContent = "Disponible très bientôt";
+      label.appendChild(tag);
+    }
+    node.addEventListener("click", function (e) { e.preventDefault(); });
+  });
+
+  var dialog = document.getElementById("soon");
+
+  if (dialog && typeof dialog.showModal === "function") {
+    var lastFocus = null;
+
+    function openSoon(door) {
+      lastFocus = document.activeElement;
+      dialog.showModal();
+      var target = door ? $('[data-door-link="' + door + '"]', dialog) : null;
+      var first = (target && target.getAttribute("href")) ? target : $(".door", dialog);
+      if (first) first.focus();
+    }
+
+    function closeSoon() {
+      dialog.close();
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    // Tout lien marqué data-soon ouvre la fenêtre au lieu de naviguer.
+    // Sans JavaScript, il mène à bientot.html, qui dit la même chose.
+    all("[data-soon]").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        openSoon(link.getAttribute("data-door"));
+      });
+    });
+
+    var closeBtn = document.getElementById("soon-close");
+    if (closeBtn) closeBtn.addEventListener("click", closeSoon);
+
+    // Clic sur le fond, en dehors du panneau.
+    dialog.addEventListener("click", function (e) {
+      if (e.target === dialog) closeSoon();
+    });
+
+    var doorListe = document.getElementById("door-liste");
+    if (doorListe) {
+      doorListe.addEventListener("click", function () {
+        closeSoon();
+        var section = document.getElementById("inscription");
+        if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+        var champ = document.getElementById("f-prenom");
+        if (champ) setTimeout(function () { champ.focus(); }, 500);
+      });
+    }
+  }
+
+  /* ==================================================================
+     Formulaire d'inscription (absent sur les autres pages)
+     ================================================================== */
   var form = document.getElementById("form");
   if (!form) return;
 
@@ -32,8 +115,6 @@
     }
   };
 
-  function $(sel, root) { return (root || document).querySelector(sel); }
-  function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   function profil() { var r = $('input[name="profil"]:checked'); return r ? r.value : "joueur"; }
 
   /* ---------- champs conditionnels ---------- */

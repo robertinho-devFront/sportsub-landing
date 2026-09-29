@@ -106,6 +106,7 @@
       <a href="#comment">Comment ça marche</a>
       <a href="#quartier">Le quartier</a>
       <a href="#partenaires">Partenaires</a>
+      <a href="bientot.html" data-soon>Ouvrir l'app</a>
       <a class="btn btn--ball btn--sm" href="#inscription">Rejoindre la liste</a>
     </nav>
   </div>
@@ -128,7 +129,7 @@
         </p>
         <div class="cta-row">
           <a class="btn btn--ball" href="#inscription">Rejoindre la liste du 17<sup>e</sup></a>
-          <a class="btn btn--ghost" href="#comment">Voir comment ça marche</a>
+          <a class="btn btn--ghost" href="bientot.html" data-soon>Voir la carte du quartier</a>
         </div>
         <p class="micro">Gratuit. Une adresse e-mail, rien d'autre. On te prévient au lancement.</p>
       </div>
@@ -329,6 +330,18 @@
           <li>Un e-mail au lancement, pas une newsletter de plus.</li>
           <li>Désinscription en un clic.</li>
         </ul>
+
+        <div class="aside-card">
+          <h3>Deux minutes de plus&nbsp;?</h3>
+          <p>
+            Un court questionnaire sur ta pratique : depuis combien de temps tu joues, à quelle
+            fréquence, en club ou pas, ce qui t'empêche de jouer plus souvent. C'est ce qui décide
+            des premières fonctionnalités.
+          </p>
+          <a class="btn btn--ghost btn--sm" href="bientot.html" data-soon data-door="questionnaire">
+            Répondre au questionnaire
+          </a>
+        </div>
       </div>
 
       <form id="form" novalidate>
@@ -438,10 +451,55 @@
       <a href="#comment">Comment ça marche</a>
       <a href="#partenaires">Partenaires</a>
       <a href="#inscription">Rejoindre la liste</a>
+      <a href="bientot.html">Où en est le projet</a>
       <a href="mentions-legales.html">Mentions légales</a>
     </nav>
   </div>
 </footer>
+
+<!-- Fenêtre « bientôt disponible ». Sans JavaScript, les liens qui l'ouvrent
+     mènent à bientot.html, qui dit exactement la même chose. -->
+<dialog id="soon" aria-labelledby="soon-title">
+  <div class="soon">
+    <button type="button" class="soon__x" id="soon-close" aria-label="Fermer">×</button>
+    <p class="kicker">Lancement 2026</p>
+    <h2 id="soon-title">Ça ouvre bientôt dans le 17<sup>e</sup>.</h2>
+    <p class="soon__lead">
+      L'application n'est pas encore ouverte : on construit d'abord le quartier, joueur par joueur.
+      En attendant, trois choses utiles&nbsp;:
+    </p>
+    <ul class="doors" id="soon-doors">
+      <li>
+        <a class="door" data-door-link="carte" href="#" target="_blank" rel="noopener">
+          <span class="door__k" aria-hidden="true">01</span>
+          <span class="door__b">
+            <strong>Voir l'aperçu de la carte</strong>
+            <span>Les terrains publics et les murs du 17<sup>e</sup>, tels qu'ils apparaîtront dans l'app.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="door" data-door-link="questionnaire" href="#" target="_blank" rel="noopener">
+          <span class="door__k" aria-hidden="true">02</span>
+          <span class="door__b">
+            <strong>Répondre au questionnaire</strong>
+            <span>Deux minutes sur ta pratique. C'est ce qui décide des premières fonctionnalités.</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <button type="button" class="door" id="door-liste">
+          <span class="door__k" aria-hidden="true">03</span>
+          <span class="door__b">
+            <strong>Laisser mon e-mail</strong>
+            <span>Un seul message, le jour où les premières parties du quartier s'ouvrent.</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+    <p class="micro">Aucune de ces trois portes ne demande de créer un compte.</p>
+  </div>
+</dialog>
 
 <script src="assets/js/main.js" defer></script>
 </body>

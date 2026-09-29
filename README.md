@@ -16,8 +16,10 @@ ligne, modifiée et partagée sans toucher à l'app.
 
 ```
 index.html               la landing complète
+bientot.html             « ça ouvre bientôt » : les trois portes, et où en est le projet
 mentions-legales.html    obligatoire dès qu'on collecte une adresse e-mail
 404.html                 page d'erreur
+google-form/             le script qui génère le questionnaire Google en une exécution
 assets/css/styles.css    tout le style, avec thème clair et thème sombre
 assets/js/main.js        formulaire, champs conditionnels, test A/B
 assets/img/              favicon et image de partage (réseaux sociaux)
@@ -99,7 +101,52 @@ Un champ piège invisible (`_gotcha`) bloque déjà les robots spammeurs.
 
 ---
 
-## 5. Mesurer ce qui se passe
+## 5. Les liens « bientôt disponible »
+
+L'application n'est pas ouverte, donc aucun lien ne doit mener dans le vide.
+Tout lien marqué `data-soon` dans le HTML ouvre une fenêtre qui propose trois portes :
+voir l'aperçu de la carte, répondre au questionnaire, laisser son e-mail.
+
+Sans JavaScript, ces mêmes liens mènent à `bientot.html`, qui dit exactement la même chose.
+Rien ne casse, et la page reste indexable.
+
+Les deux adresses se règlent en haut de `assets/js/main.js` :
+
+```js
+var LINKS = {
+  carte: "https://claude.ai/artifact/…",   // déjà rempli
+  questionnaire: ""                         // à remplir, voir ci-dessous
+};
+```
+
+Une porte dont l'adresse est vide s'affiche grisée, marquée « disponible très bientôt ».
+Mieux vaut ça qu'un lien qui tombe sur une page d'erreur.
+
+### Rendre l'aperçu de la carte visible par tout le monde
+
+**Une action manuelle, une seule fois.** L'aperçu est un artefact Claude, privé par défaut.
+Ouvre-le, clique sur `Partager`, et choisis « Tout le monde avec le lien ».
+Tant que ce n'est pas fait, tes visiteurs tomberont sur une page de connexion.
+
+### Créer le questionnaire
+
+Le dossier `google-form/` contient un script qui construit le formulaire complet —
+douze questions, validations comprises — sans que tu aies à cliquer cent fois.
+
+1. Va sur `script.google.com`, clique **Nouveau projet**
+2. Efface l'éditeur, colle tout le contenu de `google-form/creer-formulaire.gs`
+3. Clique **Exécuter**, accepte l'autorisation (le script crée un formulaire dans ton Drive, rien d'autre)
+4. Le journal d'exécution affiche deux liens : celui d'édition, et **le lien public**
+5. Colle le lien public dans `LINKS.questionnaire`, commit, push
+
+Les questions couvrent ce qui sert vraiment à segmenter : joueur ou coach, ancienneté,
+fréquence, club ou pratique libre, classement, frein principal, créneaux, arrondissement.
+La dixième est la plus importante — « on organise une partie samedi matin, tu viendrais ? » —
+parce que c'est la seule dont la réponse engage à quelque chose.
+
+---
+
+## 6. Mesurer ce qui se passe
 
 Aucun cookie n'est déposé, donc **aucun bandeau de consentement n'est nécessaire**.
 Pour avoir des statistiques dans le même esprit, décommente le bloc Plausible dans
@@ -124,18 +171,20 @@ Pour forcer une variante et la regarder : ajoute `?` puis ouvre la console et ta
 
 ---
 
-## 6. À compléter avant de communiquer
+## 7. À compléter avant de communiquer
 
 - [ ] `mentions-legales.html` : forme juridique, adresse, SIREN, directeur de publication
 - [ ] Une adresse e-mail professionnelle à la place de l'adresse personnelle
 - [ ] Vérifier sur place les trois lieux du 17e cités dans la section « Le quartier »
 - [ ] Le 3e terrain public manquant (nom, adresse, horaires)
 - [ ] `FORM_ENDPOINT` pour recevoir les inscriptions sans passer par le client mail
+- [ ] Passer l'aperçu de la carte en « tout le monde avec le lien »
+- [ ] Créer le questionnaire Google et coller son lien dans `LINKS.questionnaire`
 - [ ] Déclarer le site dans la Google Search Console et y soumettre `sitemap.xml`
 
 ---
 
-## 7. Ce qui a été pensé pour toi
+## 8. Ce qui a été pensé pour toi
 
 **Référencement.** Titre et description uniques, adresse canonique, données structurées
 (Organisation, Site, FAQ), sitemap, robots.txt, un seul `<h1>`, hiérarchie de titres
